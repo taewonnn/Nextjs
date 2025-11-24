@@ -1,7 +1,14 @@
+import BookItem from '@/components/book-item';
 import SearchableLayout from '../../components/searchable-layout';
-
+import books from '@/mock/book.json';
 export default function Page() {
-  return <div>Search page</div>;
+  return (
+    <div>
+      {books.map(book => (
+        <BookItem key={book.id} {...book} />
+      ))}
+    </div>
+  );
 }
 
 Page.getLayout = (page: React.ReactNode) => {
