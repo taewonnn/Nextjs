@@ -56,6 +56,9 @@ export const getStaticProps = async () => {
   };
 };
 
+// On Demand ISR -> 재검증 하고자하는 페이지 경로를 명시적으로 지정하여 재검증 하는 방식!
+// pages/api/revalidate.ts 파일
+
 export default function Home({ allBooks, randomBooks }: InferGetStaticPropsType<typeof getStaticProps>) {
   // winodw.location -> 에러나는 이유 -> 서버에서 실행되기 때문에, 서버에서 실행되면 에러가 난다.
   // useEffect(() => {
