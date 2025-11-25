@@ -4,7 +4,7 @@ import fetchOneBook from '@/lib/fetch-one-book';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-/** SSG - 동적 페이지 적용 방법
+/** ✅ SSG - 동적 페이지 적용 방법
 빌드 타임에서 미리 만들어둬야하는데, 동적 페이지는 id가 몇 번까지 있는지 알아야 만들어!
 그래서 getStaticPaths 함수를 사용해서 미리 만들어둬야 함!
 fallback 상태 -> 페이지 컴포넌트가 아직 서버로부터 데이터를 전달받지 못한 상태!
@@ -34,7 +34,7 @@ fallback -> blocking -> 존재 하지 않는 페이지로 요청하면 -> 즉시
 //   return { props: { book } };
 // };
 
-// SSR
+// ✅ SSR
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.params!;
   console.log('server -', id);
