@@ -2,7 +2,7 @@ import { BookData } from '@/types';
 
 /** 모든 책 가져오기 API */
 export default async function fetchBooks(q?: string): Promise<BookData[]> {
-  let url = 'onebite-books-server-sandy-two.vercel.app/book';
+  let url = 'https://onebite-books-server-sandy-two.vercel.app/book';
 
   if (q) {
     url = `${url}/search?q=${q}`;
