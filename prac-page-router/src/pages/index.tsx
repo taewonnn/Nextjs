@@ -5,7 +5,7 @@ import { InferGetStaticPropsType } from 'next';
 import fetchBooks from '@/lib/fetch-books';
 import { BookData } from '@/types';
 import fetchRandomBooks from '@/lib/fetch-random-books';
-// import { useEffect } from 'react';
+import Head from 'next/head';
 
 // ✅ Server Side Rendering - getServerSideProps => 컴포넌트 props 타입은 InferGetServerSidePropsType<typeof getServerSideProps>
 // 이 함수는 서버에서 실행되어, 클라이언트에 전달되는 데이터를 미리 불러오는 함수!
@@ -68,21 +68,33 @@ export default function Home({ allBooks, randomBooks }: InferGetStaticPropsType<
   // console.log('data', allBooks);
 
   return (
-    <div className={style.container}>
-      <section>
-        <h3>지금 추천하는 도서</h3>
-        {randomBooks.map((book: BookData) => (
-          <BookItem key={book.id} {...book} />
-        ))}
-      </section>
+    <>
+      {/* SEO 최적화 */}
+      <Head>
+        <title>ONEBITE BOOKS</title>
+        <meta name='description' content='ONEBITE BOOKS' />
+        <meta property='og:title' content='ONEBITE BOOKS' />
+        <meta property='og:description' content='한입 북스에 등록된 도서들을 만나보세요.' />
+        <meta property='og:image' content='/thumbnail.png' />
+        <meta name='keywords' content='ONEBITE BOOKS 도서, 책, 책 추천, 책 리뷰' />
+      </Head>
 
-      <section>
-        <h3>등록된 모든 도서</h3>
-        {allBooks.map((book: BookData) => (
-          <BookItem key={book.id} {...book} />
-        ))}
-      </section>
-    </div>
+      <div className={style.container}>
+        <section>
+          <h3>지금 추천하는 도서</h3>
+          {randomBooks.map((book: BookData) => (
+            <BookItem key={book.id} {...book} />
+          ))}
+        </section>
+
+        <section>
+          <h3>등록된 모든 도서</h3>
+          {allBooks.map((book: BookData) => (
+            <BookItem key={book.id} {...book} />
+          ))}
+        </section>
+      </div>
+    </>
   );
 }
 

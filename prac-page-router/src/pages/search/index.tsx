@@ -3,6 +3,7 @@ import SearchableLayout from '../../components/searchable-layout';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import fetchBooks from '@/lib/fetch-books';
 import { BookData } from '@/types';
+import Head from 'next/head';
 
 // ✅ server side props
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -25,7 +26,20 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 // };
 
 export default function Page({ books }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return <div>{books.length === 0 ? <div>검색 결과가 없습니다...</div> : books.map((book: BookData) => <BookItem key={book.id} {...book} />)}</div>;
+  return (
+    <>
+      {/* SEO 최적화 */}
+      <Head>
+        <title>ONEBITE BOOKS - 검색 결과</title>
+        <meta name='description' content='ONEBITE BOOKS - 검색 결과' />
+        <meta property='og:title' content='ONEBITE BOOKS' />
+        <meta property='og:description' content='한입 북스에 등록된 도서들을 만나보세요.' />
+        <meta property='og:image' content='/thumbnail.png' />
+        <meta name='keywords' content='ONEBITE BOOKS 도서, 책, 책 추천, 책 리뷰' />
+      </Head>
+      <div>{books.length === 0 ? <div>검색 결과가 없습니다...</div> : books.map((book: BookData) => <BookItem key={book.id} {...book} />)}</div>
+    </>
+  );
 }
 
 Page.getLayout = (page: React.ReactNode) => {

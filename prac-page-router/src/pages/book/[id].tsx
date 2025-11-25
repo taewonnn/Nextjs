@@ -3,6 +3,7 @@ import style from './[id].module.css';
 import fetchOneBook from '@/lib/fetch-one-book';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 /** ✅ SSG - 동적 페이지 적용 방법
 빌드 타임에서 미리 만들어둬야하는데, 동적 페이지는 id가 몇 번까지 있는지 알아야 만들어!
@@ -57,16 +58,27 @@ export default function Page({ book }: InferGetServerSidePropsType<typeof getSer
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
   return (
-    <div className={style.container}>
-      <div style={{ backgroundImage: `url(${coverImgUrl})` }} className={style.cover_img_container}>
-        <Image src={coverImgUrl} alt={title} width={80} height={100} />
+    <>
+      {/* SEO 최적화 */}
+      <Head>
+        <title>ONEBITE BOOKS - {title}</title>
+        <meta name='description' content='ONEBITE BOOKS - {title}' />
+        <meta property='og:title' content='ONEBITE BOOKS - {title}' />
+        <meta property='og:description' content='한입 북스에 등록된 도서들을 만나보세요.' />
+        <meta property='og:image' content={coverImgUrl} />
+        <meta name='keywords' content={description} />
+      </Head>
+      <div className={style.container}>
+        <div style={{ backgroundImage: `url(${coverImgUrl})` }} className={style.cover_img_container}>
+          <Image src={coverImgUrl} alt={title} width={80} height={100} />
+        </div>
+        <div className={style.title}>{title}</div>
+        <div className={style.subTitle}>{subTitle}</div>
+        <div className={style.author}>
+          {author} | {publisher}
+        </div>
+        <div className={style.description}>{description}</div>
       </div>
-      <div className={style.title}>{title}</div>
-      <div className={style.subTitle}>{subTitle}</div>
-      <div className={style.author}>
-        {author} | {publisher}
-      </div>
-      <div className={style.description}>{description}</div>
-    </div>
+    </>
   );
 }
