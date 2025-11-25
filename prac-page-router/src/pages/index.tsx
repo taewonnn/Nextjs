@@ -7,6 +7,7 @@ import { BookData } from '@/types';
 import fetchRandomBooks from '@/lib/fetch-random-books';
 // import { useEffect } from 'react';
 
+// Server Side Rendering - getServerSideProps => 컴포넌트 props 타입은 InferGetServerSidePropsType<typeof getServerSideProps>
 // 이 함수는 서버에서 실행되어, 클라이언트에 전달되는 데이터를 미리 불러오는 함수!
 // 컴포넌트보다 먼저 실행되어서, 컴포넌트에 필요한 데이터를 미리 불러오는 함수!
 // export const getServerSideProps = async () => {
@@ -18,6 +19,19 @@ import fetchRandomBooks from '@/lib/fetch-random-books';
 //   };
 // };
 
+// SSG - getStaticProps   => 컴포넌트 props 타입은 InferGetStaticPropsType<typeof getStaticProps>
+// 이 함수는 빌드 시 실행되어, 클라이언트에 전달되는 데이터를 미리 불러오는 함수!
+// 빌드 시 실행되어, 클라이언트에 전달되는 데이터를 미리 불러오는 함수!
+// export const getStaticProps = async () => {
+//   console.log('인덱스 페이지');
+//   const [allBooks, randomBooks] = await Promise.all([fetchBooks(), fetchRandomBooks()]);
+
+//   return {
+//     props: { allBooks, randomBooks },
+//   };
+// };
+
+// SSR
 export const getServerSideProps = async () => {
   // 모든 책 API
   // const allBooks = await fetchBooks();

@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import style from './[id].module.css';
 import fetchOneBook from '@/lib/fetch-one-book';
+import Image from 'next/image';
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { id } = context.params!;
@@ -19,7 +20,7 @@ export default function Page({ book }: InferGetServerSidePropsType<typeof getSer
   return (
     <div className={style.container}>
       <div style={{ backgroundImage: `url(${coverImgUrl})` }} className={style.cover_img_container}>
-        <img src={coverImgUrl} alt={title} />
+        <Image src={coverImgUrl} alt={title} width={80} height={100} />
       </div>
       <div className={style.title}>{title}</div>
       <div className={style.subTitle}>{subTitle}</div>
