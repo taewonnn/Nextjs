@@ -3,7 +3,7 @@ import BookItem from '../components/book-item';
 import style from './page.module.css';
 
 async function AllBokks() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`, { cache: 'no-store' });
   if (!response.ok) {
     return <div>Failed to fetch books</div>;
   }
@@ -20,7 +20,7 @@ async function AllBokks() {
 }
 
 async function RecoBooks() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/random`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/random`, { next: { revalidate: 3 } });
   if (!response.ok) {
     return <div>Failed to fetch random books</div>;
   }
