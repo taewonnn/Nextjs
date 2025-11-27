@@ -2,8 +2,8 @@ import { BookData } from '@/types';
 import BookItem from '../components/book-item';
 import style from './page.module.css';
 
-async function AllBokks() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`);
+async function AllBooks() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`, { cache: 'force-cache' });
   if (!response.ok) {
     return <div>Failed to fetch books</div>;
   }
@@ -14,7 +14,7 @@ async function AllBokks() {
     <div>
       {allBooks.map(book => (
         <BookItem key={book.id} {...book} />
-    ))}
+      ))}
     </div>
   );
 }
@@ -45,7 +45,7 @@ export default async function Home() {
       </section>
       <section>
         <h3>등록된 모든 도서</h3>
-        <AllBokks />
+        <AllBooks />
       </section>
     </div>
   );
