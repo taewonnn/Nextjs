@@ -14,7 +14,7 @@ async function AllBokks() {
     <div>
       {allBooks.map(book => (
         <BookItem key={book.id} {...book} />
-      ))}
+    ))}
     </div>
   );
 }
