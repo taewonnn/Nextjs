@@ -1,6 +1,10 @@
 import BookItem from '@/app/components/book-item';
 import { BookData } from '@/types';
 
+// export const dynamic = 'force-static'; //  무조건 static 페이지로 처리
+// export const dynamic = 'error'; // 동적 요청 발생하면 빌드 에러
+// Error occurred prerendering page "/search". Read more: https://nextjs.org/docs/messages/prerender-error
+
 export default async function Page({ searchParams }: { searchParams: Promise<{ q: string }> }) {
   const { q } = await searchParams;
   // console.log(q);

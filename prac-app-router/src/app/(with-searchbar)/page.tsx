@@ -2,6 +2,13 @@ import { BookData } from '@/types';
 import BookItem from '../components/book-item';
 import style from './page.module.css';
 
+// 특정 페이지의 유형을 강제로 static 또는 dynamic으로 설정할 수 있음!
+// export const dynamic = 'auto'           // 기본값
+// export const dynamic = 'force-dynamic'  // 항상 SSR
+// export const dynamic = 'force-static'   // 항상 SSG
+// export const dynamic = 'error'          // 동적 요청 발생하면 빌드 에러
+// export const dynamic = 'force-dynamic';
+
 async function AllBooks() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`, { cache: 'force-cache' });
   if (!response.ok) {
