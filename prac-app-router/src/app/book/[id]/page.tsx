@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import style from './page.module.css';
-import { BookData } from '@/types';
+import { BookData, ReviewData } from '@/types';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { createReviewAction } from '@/actions/create-review.action';
+import ReviewItem from '@/app/components/review-item';
+import ReviewEditor from '@/app/components/review-editor';
 
 async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/${bookId}`);
@@ -32,15 +33,25 @@ async function BookDetail({ bookId }: { bookId: string }) {
   );
 }
 
-function ReviewEditor({ bookId }: { bookId: string }) {
+/**
+ * 리뷰 리스트
+ * @param bookId string book id
+ * @returns
+ */
+async function ReviewList({ bookId }: { bookId: string }) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/book/${bookId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch reviews: ${response.statusText}`); // error.tsx 파일이 처리해줌
+  }
+
+  const reviews: ReviewData[] = await response.json();
+  // console.log(reviews);
+
   return (
     <section>
-      <form action={createReviewAction}>
-        <input hidden name='bookId' value={bookId} readOnly />
-        <input type='text' name='content' placeholder='review content' required />
-        <input type='text' name='author' placeholder='author' required />
-        <button type='submit'>Submit</button>
-      </form>
+      {reviews.map(review => (
+        <ReviewItem key={review.id} {...review} />
+      ))}
     </section>
   );
 }
@@ -62,6 +73,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </Suspense>
 
       <ReviewEditor bookId={id} />
+      <ReviewList bookId={id} />
     </div>
   );
 }
