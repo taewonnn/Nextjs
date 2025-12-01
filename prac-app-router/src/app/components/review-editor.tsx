@@ -13,7 +13,7 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
     if (state && !state.status) {
       alert(state.error);
     }
-  });
+  }, [state]);
 
   return (
     <section>
