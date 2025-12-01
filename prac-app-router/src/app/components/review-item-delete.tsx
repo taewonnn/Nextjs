@@ -15,8 +15,8 @@ export default function ReviewItemDelete({ reviewId, bookId }: { reviewId: numbe
 
   return (
     <form action={formAction} ref={formRef}>
-      <input type='text' name='bookId' value={bookId} hidden />
-      <input type='text' name='id' value={reviewId} hidden />
+      <input type='text' name='bookId' value={bookId} hidden readOnly />
+      <input type='text' name='id' value={reviewId} hidden readOnly />
       {isPending ? (
         <div>...</div>
       ) : (
