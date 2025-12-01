@@ -21,7 +21,7 @@ async function BookDetail({ bookId }: { bookId: string }) {
   return (
     <section>
       <div className={style.cover_img_container} style={{ backgroundImage: `url('${coverImgUrl}')` }}>
-        <Image src={coverImgUrl} alt={title} width={80} height={100} />
+        <Image src={coverImgUrl} alt={title} width={240} height={300} />
       </div>
       <div className={style.title}>{title}</div>
       <div className={style.subTitle}>{subTitle}</div>
