@@ -3,7 +3,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-export async function createReviewAction(formData: FormData) {
+export async function createReviewAction(_: any, formData: FormData) {
   console.log('server action called');
   console.log(formData);
 
@@ -13,7 +13,10 @@ export async function createReviewAction(formData: FormData) {
 
   // 예외처리
   if (!bookId || !content || !author) {
-    return;
+    return {
+      status: false,
+      error: '리뷰 내용과 작성자를 입력해주세요!',
+    };
   }
 
   // api 호출
@@ -24,7 +27,7 @@ export async function createReviewAction(formData: FormData) {
     });
 
     if (!response.ok) {
-      return;
+      throw new Error(`리뷰 저장에 실패했습니다! -  ${response.statusText}`);
     }
     console.log(response.status);
 
@@ -35,6 +38,10 @@ export async function createReviewAction(formData: FormData) {
 
     // 2. 특정 경로의 모든 동적 페이지를 재검증
     revalidatePath('/book/[id]', 'page');
+    return {
+      status: true,
+      error: '',
+    };
 
     // 3. 특정 레이아웃을 가지는 모든 페이지를 재검증
     // revalidatePath('/(with-searchbar)', 'layout');
@@ -48,6 +55,9 @@ export async function createReviewAction(formData: FormData) {
     return;
   } catch (error) {
     console.error(error);
-    return;
+    return {
+      status: false,
+      error: `리뷰 저장에 실패했습니다! -  ${error}`,
+    };
   }
 }
