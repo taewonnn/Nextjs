@@ -1,9 +1,8 @@
 import { BookData } from '@/types';
 import BookItem from '../components/book-item';
 import style from './page.module.css';
-import { delay } from '@/util/delay';
+// import { delay } from '@/util/delay';
 import { Suspense } from 'react';
-import BookItemSkeleton from '../components/skeleton/book-item-skeleton';
 import BookListSkeleton from '../components/skeleton/book-list-skeleton';
 import { Metadata } from 'next';
 
@@ -15,7 +14,7 @@ import { Metadata } from 'next';
 // export const dynamic = 'force-dynamic';
 
 async function AllBooks() {
-  await delay(1500); // delay 1.5초 지연 -> suspense test 용도
+  // await delay(1500); // delay 1.5초 지연 -> suspense test 용도
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book`, { cache: 'force-cache' });
   if (!response.ok) {
     return <div>Failed to fetch books</div>;
@@ -32,10 +31,11 @@ async function AllBooks() {
   );
 }
 
-export const dynamic = 'force-dynamic';
+// 강제로 동적 페이지로 설정
+// export const dynamic = 'force-dynamic';
 
 async function RecoBooks() {
-  await delay(3000); // delay 3초 지연 -> suspense test 용도
+  // await delay(3000); // delay 3초 지연 -> suspense test 용도
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/random`, { next: { revalidate: 3 } });
   if (!response.ok) {
     return <div>Failed to fetch random books</div>;
