@@ -39,7 +39,7 @@ async function BookDetail({ bookId }: { bookId: string }) {
  * @returns
  */
 async function ReviewList({ bookId }: { bookId: string }) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/book/${bookId}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review/book/${bookId}`, { next: { tags: [`review-${bookId}`] } });
   if (!response.ok) {
     throw new Error(`Failed to fetch reviews: ${response.statusText}`); // error.tsx 파일이 처리해줌
   }

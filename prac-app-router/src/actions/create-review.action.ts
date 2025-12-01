@@ -28,7 +28,23 @@ export async function createReviewAction(formData: FormData) {
     }
     console.log(response.status);
 
-    revalidatePath(`/book/${bookId}`); // 성공하면 바로 방금 추가한 리뷰 보이게 하기 위해 재검증(서버 측에서만 호출 가능! - 서버컴포넌트이거나 'use server' 함수 내에서만 호출 가능)
+    // 재검증 - revalidatePath
+
+    // 1. 특정 주소의 해당하는 페이지만 재검증
+    // revalidatePath(`/book/${bookId}`); // 성공하면 바로 방금 추가한 리뷰 보이게 하기 위해 재검증(서버 측에서만 호출 가능! - 서버컴포넌트이거나 'use server' 함수 내에서만 호출 가능)
+
+    // 2. 특정 경로의 모든 동적 페이지를 재검증
+    revalidatePath('/book/[id]', 'page');
+
+    // 3. 특정 레이아웃을 가지는 모든 페이지를 재검증
+    // revalidatePath('/(with-searchbar)', 'layout');
+
+    // 4. 모든 데이터 재검증 -> index 경로에 있는 레이아웃인 루트 레이아웃을 갖는 모든 페이지를 모두 재검증!
+    // revalidatePath('/', 'layout');
+
+    // 5. 태그를 가지는 모든 페이지를 재검증 -- reviewList API 호출 시 태그를 추가해서 재검증 가능!
+    // revalidateTag(`review-${bookId}`);
+
     return;
   } catch (error) {
     console.error(error);
