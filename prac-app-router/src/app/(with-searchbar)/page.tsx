@@ -5,6 +5,7 @@ import { delay } from '@/util/delay';
 import { Suspense } from 'react';
 import BookItemSkeleton from '../components/skeleton/book-item-skeleton';
 import BookListSkeleton from '../components/skeleton/book-list-skeleton';
+import { Metadata } from 'next';
 
 // 특정 페이지의 유형을 강제로 static 또는 dynamic으로 설정할 수 있음!
 // export const dynamic = 'auto'           // 기본값
@@ -50,6 +51,17 @@ async function RecoBooks() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'ONEBITE BOOKS',
+  description: '한입북스에 등록된도서를 만나보세요!',
+  openGraph: {
+    title: 'ONEBITE BOOKS',
+    description: '한입북스에 등록된도서를 만나보세요!',
+    images: ['/thumbnail.png'],
+  },
+  keywords: 'ONEBITE BOOKS, 도서, 책, 책 추천, 책 리뷰',
+};
 
 export default async function Home() {
   return (

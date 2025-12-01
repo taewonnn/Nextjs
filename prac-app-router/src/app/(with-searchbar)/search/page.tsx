@@ -1,6 +1,21 @@
 import BookItem from '@/app/components/book-item';
 import { BookData } from '@/types';
 import { delay } from '@/util/delay';
+import { Metadata } from 'next';
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q: string }> }) {
+  const { q } = await searchParams;
+  return {
+    title: `ONEBITE BOOKS - 검색 결과: ${q}`,
+    description: `한입북스에 등록된 도서를 검색해보세요!`,
+    openGraph: {
+      title: `ONEBITE BOOKS - 검색 결과: ${q}`,
+      description: `한입북스에 등록된 도서를 검색해보세요!`,
+      images: ['/thumbnail.png'],
+    },
+    keywords: 'ONEBITE BOOKS, 도서, 책, 책 추천, 책 리뷰, 검색 결과',
+  };
+}
 
 // export const dynamic = 'force-static'; //  무조건 static 페이지로 처리
 // export const dynamic = 'error'; // 동적 요청 발생하면 빌드 에러

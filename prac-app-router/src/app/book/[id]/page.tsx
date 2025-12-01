@@ -6,6 +6,32 @@ import { Suspense } from 'react';
 import ReviewItem from '@/app/components/review-item';
 import ReviewEditor from '@/app/components/review-editor';
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/${id}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      return notFound();
+    }
+    return <div>Failed to fetch book</div>;
+  }
+
+  const book: BookData = await response.json();
+  const { title, subTitle, author, publisher, coverImgUrl } = book;
+
+  return {
+    title: `ONEBITE BOOKS - ${title}`,
+    description: `${subTitle}`,
+    openGraph: {
+      title: `ONEBITE BOOKS - ${title}`,
+      description: `${subTitle}`,
+      images: [`${coverImgUrl}`],
+    },
+    keywords: `${author}, ${publisher}, ${title},${subTitle}`,
+  };
+}
+
 async function BookDetail({ bookId }: { bookId: string }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book/${bookId}`);
   if (!response.ok) {
